@@ -79,6 +79,7 @@ impl<'de> Deserialize<'de> for Xuid {
     }
 }
 
+#[macro_export]
 macro_rules! xuid {
     ($xuid:literal) => {
         Xuid::from($xuid)
