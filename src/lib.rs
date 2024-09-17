@@ -27,12 +27,6 @@ impl From<Xuid> for String {
     }
 }
 
-impl From<Xuid> for &str {
-    fn from(x: Xuid) -> Self {
-
-    }
-}
-
 impl TryFrom<String> for Xuid {
     type Error = ParseIntError;
 
@@ -82,6 +76,6 @@ impl<'de> Deserialize<'de> for Xuid {
 #[macro_export]
 macro_rules! xuid {
     ($xuid:literal) => {
-        Xuid::from($xuid)
+        xuid::Xuid::from($xuid)
     };
 }
