@@ -78,3 +78,9 @@ impl<'de> Deserialize<'de> for Xuid {
         Self::try_from(s).map_err(serde::de::Error::custom)
     }
 }
+
+macro_rules! xuid {
+    ($xuid:literal) => {
+        Xuid::from($xuid)
+    };
+}
