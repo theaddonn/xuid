@@ -6,7 +6,11 @@
 
 XUID library for Rust
 
-Well, there is not really much more to say...
+_What even is an XUID?_
+
+XUIDs, or Xbox User IDs, are unique 64-bit unsigned integers assigned to Xbox Live accounts to identify users across Microsoft's gaming platforms. These IDs are used in various services, such as Xbox Live multiplayer games, cloud storage, and profile management, to reference a user without relying on a username, which can change over time. XUIDs ensure that every user is uniquely identified and remain consistent even if a gamertag is updated.
+
+They're widely used in games like Minecraft: Bedrock Edition, where XUIDs can link in-game players to their Xbox Live accounts, enabling cross-platform play and access to Xbox Live services.
 
 ## Usage Example
 
