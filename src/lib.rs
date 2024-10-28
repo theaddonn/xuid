@@ -1,22 +1,25 @@
 use std::fmt::{Debug, Display, Formatter};
-use std::num::ParseIntError;
+use std::num::{NonZeroU64, ParseIntError, TryFromIntError};
+use std::str::FromStr;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize, Deserializer, Serializer};
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Xuid(u64);
+#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct Xuid(NonZeroU64);
 
-impl From<u64> for Xuid {
+impl TryFrom<u64> for Xuid {
+    type Error = TryFromIntError;
+
     #[inline]
-    fn from(x: u64) -> Self {
-        Self(x)
+    fn try_from(value: u64) -> Result<Self, Self::Error> {
+        value.try_into().map(Xuid)
     }
 }
 
 impl From<Xuid> for u64 {
     #[inline]
     fn from(x: Xuid) -> Self {
-        x.0
+        x.0.get()
     }
 }
 
@@ -45,10 +48,24 @@ impl TryFrom<&str> for Xuid {
     }
 }
 
+impl FromStr for Xuid {
+    type Err = ParseIntError;
+
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        value.parse().map(Self)
+    }
+}
+
+impl Display for Xuid {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:X}", self.0.get())
+    }
+}
+
 impl Display for Xuid {
     #[inline]
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
+        write!(f, "{}", self.0.get())
     }
 }
 
@@ -76,6 +93,6 @@ impl<'de> Deserialize<'de> for Xuid {
 #[macro_export]
 macro_rules! xuid {
     ($xuid:literal) => {
-        xuid::Xuid::from($xuid)
+        xuid::Xuid::try_from($xuid)
     };
 }
