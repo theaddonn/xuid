@@ -1,6 +1,6 @@
 [package]
 name = "xuid"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 authors = ["theaddonn <theaddonn@gmail.com>"]
 readme = "README.md"
