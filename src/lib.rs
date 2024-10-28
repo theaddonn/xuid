@@ -56,7 +56,7 @@ impl FromStr for Xuid {
     }
 }
 
-impl Display for Xuid {
+impl Debug for Xuid {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{:X}", self.0.get())
     }
